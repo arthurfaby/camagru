@@ -1,0 +1,9 @@
+POST http://localhost:8000/?table=posts
+Content-Type: application/json
+
+{
+    "likes": 2,
+    "author": 1,
+    "photo_url": "images/image.png",
+    "superposable_image": 1
+}

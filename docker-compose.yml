@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  php-apache:
+    container_name: php-apache
+    build: ./services/backend/
+    volumes:
+      - ./data/backend:/var/www/html/
+    ports:
+      - 8000:80
+  database:
+    container_name: database
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - 9906:3306
+    volumes:
+      - ./database/:/var/lib/mysql/
+  phpmya:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: database
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      UPLOAD_LIMIT: 20M
+    ports:
+      - 8888:80
